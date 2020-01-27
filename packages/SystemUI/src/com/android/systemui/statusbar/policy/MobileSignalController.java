@@ -83,6 +83,7 @@ public class MobileSignalController extends SignalController<
     private MobileIconGroup mDefaultIcons;
     private Config mConfig;
     private final Handler mDisplayGraceHandler;
+    private boolean mDataDisabledIcon = false;
     @VisibleForTesting
     boolean mInflateSignalStrengths = false;
     @VisibleForTesting
@@ -521,7 +522,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.roaming = isRoaming();
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled() && !mConfig.alwaysShowDataRatIcon) {
+        } else if (isDataDisabled() && mDataDisabledIcon) {
             if (mSubscriptionInfo.getSubscriptionId()
                     != mDefaults.getDefaultDataSubId()) {
                 mCurrentState.iconGroup = TelephonyIcons.NOT_DEFAULT_DATA;
